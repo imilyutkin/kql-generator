@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using KQLGenerator.Contracts;
 using KQLGenerator.Enums;
 
@@ -11,25 +12,25 @@ namespace KQLGenerator
         private const String Contains = ":";
         private const String NotContains = ":";
 
-        protected String ManagedProperty
-        {
-            get;
-            set;
-        }
-       
-        protected String Value
+        public String ManagedProperty
         {
             get;
             set;
         }
 
-        protected ConcatOperator? Operator
+        public String Value
         {
             get;
             set;
         }
 
-        protected Operation Operation
+        public ConcatOperator? Operator
+        {
+            get;
+            set;
+        }
+
+        public Operation Operation
         {
             get;
             set;

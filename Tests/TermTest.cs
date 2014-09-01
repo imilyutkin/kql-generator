@@ -1,6 +1,5 @@
 ﻿using System;
-using System.IO;
-using System.Security.Policy;
+using System.Collections.Generic;
 using KQLGenerator;
 using KQLGenerator.Enums;
 using Xunit;

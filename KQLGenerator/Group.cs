@@ -5,13 +5,19 @@ using KQLGenerator.Enums;
 
 namespace KQLGenerator
 {
-    public class Query : IQuery
+    public class Group : IGroup
     {
         protected Stack<IToken> Tokens;
 
-        public Query()
+        public Group()
         {
             Tokens = new Stack<IToken>();
+        }
+
+        public Query Query
+        {
+            get;
+            set;
         }
 
         public string Build()
@@ -19,25 +25,29 @@ namespace KQLGenerator
             throw new NotImplementedException();
         }
 
-        public IQuery AddTerm(String managedProperty, String value, Operation operation, ConcatOperator? concatOperator = null)
+        public IGroup AddTerm(String managedProperty, String value, Operation operation, ConcatOperator? concatOperator = null)
         {
             Tokens.Push(new Term(managedProperty, value, operation, concatOperator));
             return this;
         }
 
-        public IQuery AddCompositeQuery(String managedProperty, List<String> values, Operation operation,
-            ConcatOperator compoundOperator, ConcatOperator? concatOperator = null)
+        public IGroup AddCompositeQuery(string managedProperty, List<string> values, Operation operation, ConcatOperator compoundOperator,
+            ConcatOperator? concatOperator = null)
         {
-            Tokens.Push(new CompositeTerm(managedProperty, values, operation, compoundOperator, concatOperator));
-            return this;
+            throw new NotImplementedException();
         }
 
         public IGroup OpenGroup()
         {
             var group = new Group();
-            group.Query = this;
+            group.Query = Query;
             Tokens.Push(group);
             return group;
+        }
+
+        public IQuery CloseGroup()
+        {
+            return Query;
         }
     }
 }

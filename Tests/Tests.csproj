@@ -42,6 +42,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompositeTermTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TermTest.cs" />
   </ItemGroup>
