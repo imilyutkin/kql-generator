@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using KQLGenerator.Contracts;
 using KQLGenerator.Enums;
+using KQLGenerator.Exceptions;
 
 namespace KQLGenerator
 {
@@ -24,13 +24,13 @@ namespace KQLGenerator
             set;
         }
 
-        public ConcatOperator? Operator
+        public Operation Operation
         {
             get;
             set;
         }
 
-        public Operation Operation
+        public ConcatOperator? ConcatOperator
         {
             get;
             set;
@@ -42,7 +42,7 @@ namespace KQLGenerator
         {
             ManagedProperty = managedProperty;
             Value = value;
-            Operator = concatOperator;
+            ConcatOperator = concatOperator;
             Operation = operation;
         }
 
@@ -51,18 +51,18 @@ namespace KQLGenerator
             CheckManagedPropertyAndValue();
             string from = GetManagedPropertyWithOperator();
             return String.Format(TermTemplate, from, Value,
-                Operator.HasValue ? " " + Operator.ToString().ToUpper() + " " : "");
+                ConcatOperator.HasValue ? " " + ConcatOperator.ToString().ToUpper() : "");
         }
 
         private void CheckManagedPropertyAndValue()
         {
             if (String.IsNullOrEmpty(ManagedProperty))
             {
-                throw new ArgumentException("Managed property is null or empty");
+                throw new ManagedPropertyNullOrEmptyException("Managed property is null or empty");
             }
             if (String.IsNullOrEmpty(Value))
             {
-                throw new ArgumentException("Value is null or empty");
+                throw new ValueNullOrEmptyException("Value is null or empty");
             }
         }
 

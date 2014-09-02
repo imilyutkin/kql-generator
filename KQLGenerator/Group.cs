@@ -20,6 +20,8 @@ namespace KQLGenerator
             set;
         }
 
+        public ConcatOperator? ConcatOperator { get; set; }
+
         public string Build()
         {
             throw new NotImplementedException();

@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KQLGenerator.Exceptions
 {
-    class ManagedPropertyNullOrEmpty
+    public class ManagedPropertyNullOrEmptyException : Exception
     {
+        public ManagedPropertyNullOrEmptyException(String message) : base(message)
+        {
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using KQLGenerator;
 using KQLGenerator.Enums;
+using KQLGenerator.Exceptions;
 using Xunit;
 
 namespace Tests
@@ -44,28 +45,28 @@ namespace Tests
         public void ManagedPropertyIsNull()
         {
             Term term = new Term(null, "ivan", Operation.Contains);
-            Assert.Throws<ArgumentException>(() => term.Build());
+            Assert.Throws<ManagedPropertyNullOrEmptyException>(() => term.Build());
         }
 
         [Fact]
         public void ValuePropertyIsNull()
         {
             Term term = new Term("title", null, Operation.Contains);
-            Assert.Throws<ArgumentException>(() => term.Build());
+            Assert.Throws<ValueNullOrEmptyException>(() => term.Build());
         }
 
         [Fact]
         public void ValuePropertyIsEmpty()
         {
             Term term = new Term("title", "", Operation.Contains);
-            Assert.Throws<ArgumentException>(() => term.Build());
+            Assert.Throws<ValueNullOrEmptyException>(() => term.Build());
         }
 
         [Fact]
         public void ManagedPropertyPropertyIsEmpty()
         {
             Term term = new Term("", "ivan", Operation.Contains);
-            Assert.Throws<ArgumentException>(() => term.Build());
+            Assert.Throws<ManagedPropertyNullOrEmptyException>(() => term.Build());
         }
 
         [Fact]
@@ -73,7 +74,7 @@ namespace Tests
         {
             Term term = new Term("title", "ivan", Operation.Contains, ConcatOperator.And);
             var t = term.Build();
-            Assert.Equal(t, "title:ivan AND ");
+            Assert.Equal(t, "title:ivan AND");
         }
     }
 }

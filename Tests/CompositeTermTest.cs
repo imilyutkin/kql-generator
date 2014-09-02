@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using KQLGenerator;
 using KQLGenerator.Enums;
+using KQLGenerator.Exceptions;
 using Xunit;
 
 namespace Tests
@@ -30,7 +31,7 @@ namespace Tests
             var term = new CompositeTerm("title", new List<String> {"ivan", "nadine", "ksenya", "sergei"},
                 Operation.Equal, ConcatOperator.Or, ConcatOperator.And);
             var t = term.Build();
-            var query = "title=ivan OR title=nadine OR title=ksenya OR title=sergei AND ";
+            var query = "title=ivan OR title=nadine OR title=ksenya OR title=sergei AND";
             Assert.Equal(t, query);
         }
 
@@ -42,7 +43,7 @@ namespace Tests
         {
             var term = new CompositeTerm("title", null,
                 Operation.Equal, ConcatOperator.Or, ConcatOperator.And);
-            Assert.Throws<ArgumentException>(() => term.Build());
+            Assert.Throws<ValueNullOrEmptyException>(() => term.Build());
         }
 
         /// <summary>
@@ -53,7 +54,7 @@ namespace Tests
         {
             var term = new CompositeTerm(null, new List<String> { "ivan", "nadine", "ksenya", "sergei" },
                 Operation.Equal, ConcatOperator.Or, ConcatOperator.And);
-            Assert.Throws<ArgumentException>(() => term.Build());
+            Assert.Throws<ManagedPropertyNullOrEmptyException>(() => term.Build());
         }
     }
 }

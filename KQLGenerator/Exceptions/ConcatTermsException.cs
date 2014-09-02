@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace KQLGenerator.Exceptions
 {
-    class ValueNullOrEmpty
+    public class ConcatTermsException : Exception
     {
+        public ConcatTermsException(String message) : base(message)
+        {
+        }
     }
 }

@@ -46,6 +46,9 @@
     <Compile Include="Contracts\IToken.cs" />
     <Compile Include="Enums\ConcatOperator.cs" />
     <Compile Include="Enums\Operation.cs" />
+    <Compile Include="Exceptions\ConcatTermsException.cs" />
+    <Compile Include="Exceptions\ManagedPropertyNullOrEmptyException.cs" />
+    <Compile Include="Exceptions\ValueNullOrEmptyException.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />

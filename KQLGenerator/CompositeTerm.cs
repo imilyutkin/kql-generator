@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using KQLGenerator.Contracts;
 using KQLGenerator.Enums;
+using KQLGenerator.Exceptions;
 
 namespace KQLGenerator
 {
@@ -20,39 +21,39 @@ namespace KQLGenerator
             set;
         }
 
+        protected const String ConcatOperatorTemplate = "{0} {1}";
+
         protected const String CompoundOperatorTemplate = " {0} ";
 
         public CompositeTerm(String managedProperty, List<String> values, Operation operation,
             ConcatOperator compoundOperator, ConcatOperator? concatOperator = null)
         {
             CompoundOperator = compoundOperator;
+            ConcatOperator = concatOperator;
             Terms = values != null && values.Count != 0
                 ? values.Select(value => new Term(managedProperty, value, operation)).ToList()
                 : new List<Term>();
-            if (concatOperator.HasValue)
-            {
-                SetToLastTermConcatOperator(concatOperator);   
-            }
         }
 
-        private void SetToLastTermConcatOperator(ConcatOperator? concatOperator)
+        public ConcatOperator? ConcatOperator
         {
-            var last = Terms.LastOrDefault();
-            if (last != null)
-            {
-                Terms.Remove(last);
-                Terms.Add(new Term(last.ManagedProperty, last.Value, last.Operation, concatOperator));   
-            }
+            get;
+            set;
         }
-
         public String Build()
         {
             if (Terms != null && Terms.Count != 0)
             {
-                return String.Join(String.Format(CompoundOperatorTemplate, CompoundOperator.ToString().ToUpper()),
-                    Terms.Select(term => term.Build()));
+                var buildedQuery =
+                    String.Join(String.Format(CompoundOperatorTemplate, CompoundOperator.ToString().ToUpper()),
+                        Terms.Select(term => term.Build()));
+                if (ConcatOperator.HasValue)
+                {
+                    return String.Format(ConcatOperatorTemplate, buildedQuery, ConcatOperator.Value.ToString().ToUpper());
+                }
+                return buildedQuery;
             }
-            throw new ArgumentException("Managed property or values is null or empty");
+            throw new ValueNullOrEmptyException("Managed property or values is null or empty");
         }
     }
 }
