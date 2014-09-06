@@ -3,54 +3,55 @@ using System.Collections.Generic;
 using KQLGenerator;
 using KQLGenerator.Enums;
 using KQLGenerator.Exceptions;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Tests
+namespace MSUnitTests
 {
+    [TestClass]
     public class QueryTest
     {
-        [Fact]
+        [TestMethod]
         public void QueryBuildWithOneTerm()
         {
             var query = new KQLQuery().AddTerm("title", "ivan", Operation.Equal).Build();
-            Assert.Equal("title=ivan", query);
+            Assert.AreEqual("title=ivan", query);
         }
 
-        [Fact]
+        [TestMethod]
         public void QueryBuildWithOneCompositeTerm()
         {
             var compositeQuery =
                 new KQLQuery().AddCompositeQuery("title", new List<String> {"ivan", "nadine"}, Operation.Equal,
                     ConcatOperator.Or).Build();
-            Assert.Equal("title=ivan OR title=nadine", compositeQuery);
+            Assert.AreEqual("title=ivan OR title=nadine", compositeQuery);
         }
 
-        [Fact]
+        [TestMethod]
         public void QueryBuildWithTwoTerms()
         {
             var query = new KQLQuery().AddTerm("title", "ivan", Operation.Equal, ConcatOperator.Or)
                 .AddTerm("title", "nadine", Operation.Equal).Build();
-            Assert.Equal("title=ivan OR title=nadine", query);
+            Assert.AreEqual("title=ivan OR title=nadine", query);
         }
 
-        [Fact]
+        [TestMethod]
+        [ExpectedException(typeof(ConcatTermsException))]
         public void QueryBuildWithTwoTerms_WithoutConcat()
         {
             var query = new KQLQuery().AddTerm("title", "ivan", Operation.Equal, ConcatOperator.Or)
                 .AddTerm("title", "john", Operation.Equal)
                 .AddTerm("title", "nadine", Operation.Equal);
-            Assert.Throws<ConcatTermsException>(() => query.Build());
+            query.Build();
         }
 
-        [Fact]
+        [TestMethod]
         public void QueryBuildWithThreeTerms()
         {
             var query = new KQLQuery().AddTerm("title", "ivan", Operation.Equal, ConcatOperator.Or)
                 .AddTerm("title", "john", Operation.Contains, ConcatOperator.And)
                 .AddTerm("title", "nadine", Operation.Equal);
             var buildedQuery = String.Empty;
-            Assert.DoesNotThrow(() => buildedQuery = query.Build());
-            Assert.Equal("title=ivan OR title:john AND title=nadine", buildedQuery);
+            Assert.AreEqual("title=ivan OR title:john AND title=nadine", buildedQuery);
         }
     }
 }

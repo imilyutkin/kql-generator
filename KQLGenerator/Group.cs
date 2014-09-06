@@ -14,7 +14,7 @@ namespace KQLGenerator
             Tokens = new Stack<IToken>();
         }
 
-        public Query Query
+        public KQLQuery KqlQuery
         {
             get;
             set;
@@ -42,14 +42,14 @@ namespace KQLGenerator
         public IGroup OpenGroup()
         {
             var group = new Group();
-            group.Query = Query;
+            group.KqlQuery = KqlQuery;
             Tokens.Push(group);
             return group;
         }
 
-        public IQuery CloseGroup()
+        public IKQLQuery CloseGroup()
         {
-            return Query;
+            return KqlQuery;
         }
     }
 }

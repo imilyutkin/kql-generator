@@ -42,7 +42,7 @@
     <Compile Include="CompositeTerm.cs" />
     <Compile Include="Contracts\IGroup.cs" />
     <Compile Include="Contracts\IManageToken.cs" />
-    <Compile Include="Contracts\IQuery.cs" />
+    <Compile Include="Contracts\IKQLQuery.cs" />
     <Compile Include="Contracts\IToken.cs" />
     <Compile Include="Enums\ConcatOperator.cs" />
     <Compile Include="Enums\Operation.cs" />
@@ -51,7 +51,7 @@
     <Compile Include="Exceptions\ValueNullOrEmptyException.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Query.cs" />
+    <Compile Include="KQLQuery.cs" />
     <Compile Include="Term.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

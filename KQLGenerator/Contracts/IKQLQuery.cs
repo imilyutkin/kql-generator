@@ -3,7 +3,7 @@ using KQLGenerator.Enums;
 
 namespace KQLGenerator.Contracts
 {
-    public interface IQuery : IManageToken<IQuery>, IToken
+    public interface IKQLQuery : IManageToken<IKQLQuery>, IToken
     {
         IGroup OpenGroup();
     }

@@ -7,13 +7,13 @@ using KQLGenerator.Exceptions;
 
 namespace KQLGenerator
 {
-    public class Query : IQuery
+    public class KQLQuery : IKQLQuery
     {
         protected List<IToken> Tokens;
 
         protected const String TokenSeparator = " ";
 
-        public Query()
+        public KQLQuery()
         {
             Tokens = new List<IToken>();
         }
@@ -46,13 +46,13 @@ namespace KQLGenerator
             }
         }
 
-        public IQuery AddTerm(String managedProperty, String value, Operation operation, ConcatOperator? concatOperator = null)
+        public IKQLQuery AddTerm(String managedProperty, String value, Operation operation, ConcatOperator? concatOperator = null)
         {
             Tokens.Add(new Term(managedProperty, value, operation, concatOperator));
             return this;
         }
 
-        public IQuery AddCompositeQuery(String managedProperty, List<String> values, Operation operation,
+        public IKQLQuery AddCompositeQuery(String managedProperty, List<String> values, Operation operation,
             ConcatOperator compoundOperator, ConcatOperator? concatOperator = null)
         {
             Tokens.Add(new CompositeTerm(managedProperty, values, operation, compoundOperator, concatOperator));
@@ -62,7 +62,7 @@ namespace KQLGenerator
         public IGroup OpenGroup()
         {
             var group = new Group();
-            group.Query = this;
+            group.KqlQuery = this;
             Tokens.Add(group);
             return group;
         }

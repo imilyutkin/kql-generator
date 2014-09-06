@@ -2,13 +2,13 @@
 {
     public interface IGroup : IManageToken<IGroup>, IToken
     {
-        Query Query
+        KQLQuery KqlQuery
         {
             get;
             set;
         }
 
-        IQuery CloseGroup();
+        IKQLQuery CloseGroup();
 
         IGroup OpenGroup();
     }
